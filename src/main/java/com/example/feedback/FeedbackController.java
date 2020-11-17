@@ -1,16 +1,31 @@
 package com.example.feedback;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import com.example.feedback.domain.Feedback;
+import com.example.feedback.repos.FeedbackRepo;
+import org.ocpsoft.rewrite.annotation.Join;
+import org.ocpsoft.rewrite.el.ELBeanName;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
-@Controller
+@Scope(value = "session")
+@Component(value = "feedbackController")
+@ELBeanName(value = "feedbackController")
+@Join(path = "/feedback", to = "/feedback-form.jsf")
 public class FeedbackController {
 
-    @GetMapping("/greeting")
-    public String greeting(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {
-        model.addAttribute("name", name);
-        return "greeting";
+    @Autowired
+    private FeedbackRepo feedbackRepo;
+
+    private Feedback feedback = new Feedback();
+
+    public String save() {
+        feedbackRepo.save(feedback);
+        feedback = new Feedback();
+        return "/success.xhtml?faces-redirect=true";
+    }
+
+    public Feedback getFeedback() {
+        return feedback;
     }
 }
