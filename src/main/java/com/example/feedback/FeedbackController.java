@@ -66,10 +66,18 @@ public class FeedbackController {
             return;
         }
 
+        FacesMessage message = null;
         if (!mail.equals(mailRepeat)) {
-            FacesMessage msg = new FacesMessage("E-mail address must be the same!");
-            msg.setSeverity(FacesMessage.SEVERITY_ERROR);
-            context.addMessage(mailId, msg);
+            message = new FacesMessage("E-mail address must be the same!");
+        } else if (!mail.contains("@")) {
+            message = new FacesMessage("E-mail address must contain @ symbol!");
+        } else if (!mail.matches("^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$")) {
+            message = new FacesMessage("Invalid email address. It must match next form: 'user_name@domain_name' !");
+        }
+
+        if (message != null) {
+            message.setSeverity(FacesMessage.SEVERITY_ERROR);
+            context.addMessage(mailId, message);
             context.renderResponse();
         }
     }
