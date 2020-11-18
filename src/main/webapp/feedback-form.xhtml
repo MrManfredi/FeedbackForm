@@ -9,35 +9,50 @@
 <ui:composition template="layout.xhtml">
     <ui:define name="content">
         <h:form id="feedbackForm">
-            <p:panel header="Feedback">
-                <h:message for="grid" style="color:red;"/>
+            <p:panel header="Feedback" style="width: 500px; margin: 20px auto;">
                 <h:panelGrid id="grid" columns="1">
                     <f:event listener="#{feedbackController.validateMail}" type="postValidate"/>
 
                     <p:outputLabel for="name" value="Name: "/>
-                    <p:inputText id="name" value="#{feedbackController.feedback.name}" required="true"/>
+                    <p:inputText id="name"
+                                 value="#{feedbackController.feedback.name}"
+                                 required="true"
+                                 style="width: 450px"/>
                     <p:message for="name"/>
 
                     <p:outputLabel for="firstName" value="First Name: "/>
-                    <p:inputText id="firstName" value="#{feedbackController.feedback.firstName}" required="true"/>
+                    <p:inputText id="firstName"
+                                 value="#{feedbackController.feedback.firstName}"
+                                 required="true"
+                                 style="width: 450px"/>
                     <p:message for="firstName"/>
 
                     <p:outputLabel for="contactText" value="Contact Text: "/>
-                    <p:inputText id="contactText" value="#{feedbackController.feedback.contactText}" required="true"/>
+                    <p:inputText id="contactText"
+                                 value="#{feedbackController.feedback.contactText}"
+                                 required="true"
+                                 style="width: 450px"/>
                     <p:message for="contactText"/>
 
                     <p:outputLabel for="mail" value="E-mail address: "/>
-                    <p:inputText id="mail" value="#{feedbackController.feedback.mail}" required="true"/>
+                    <p:inputText id="mail"
+                                 value="#{feedbackController.feedback.mail}"
+                                 required="true"
+                                 style="width: 450px"/>
                     <p:message for="mail"/>
 
                     <p:outputLabel for="mailRepeat" value="Repeat e-mail address: "/>
-                    <p:inputText id="mailRepeat" required="true"/>
+                    <p:inputText id="mailRepeat"
+                                 required="true"
+                                 style="width: 450px"/>
                     <p:message for="mailRepeat"/>
 
+                    <br/>
+
                     <h:commandButton value="Send"
-                                     icon="pi pi-check"
                                      validateClient="true"
-                                     action="#{feedbackController.save}"/>
+                                     action="#{feedbackController.save}"
+                                     style="width: 460px"/>
                 </h:panelGrid>
             </p:panel>
         </h:form>
