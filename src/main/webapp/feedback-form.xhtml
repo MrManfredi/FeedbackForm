@@ -3,19 +3,41 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:p="http://primefaces.org/ui">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+>
 <ui:composition template="layout.xhtml">
     <ui:define name="content">
-        <h:form id="productForm">
-            <p:panel header="Product Details">
-                <h:panelGrid columns="1">
-                    <p:outputLabel for="name" value="Name: " />
-                    <p:inputText id="name" value="#{feedbackController.feedback.name}" />
-                    <p:outputLabel for="firstName" value="First Name: " />
-                    <p:inputText id="firstName" value="#{feedbackController.feedback.firstName}" />
-                    <p:outputLabel for="contactText" value="Contact Text: " />
-                    <p:inputText id="contactText" value="#{feedbackController.feedback.contactText}" />
-                    <h:commandButton value="Save" action="#{feedbackController.save}" />
+        <h:form id="feedbackForm">
+            <p:panel header="Feedback">
+                <h:message for="grid" style="color:red;"/>
+                <h:panelGrid id="grid" columns="1">
+                    <f:event listener="#{feedbackController.validateMail}" type="postValidate"/>
+
+                    <p:outputLabel for="name" value="Name: "/>
+                    <p:inputText id="name" value="#{feedbackController.feedback.name}" required="true"/>
+                    <p:message for="name"/>
+
+                    <p:outputLabel for="firstName" value="First Name: "/>
+                    <p:inputText id="firstName" value="#{feedbackController.feedback.firstName}" required="true"/>
+                    <p:message for="firstName"/>
+
+                    <p:outputLabel for="contactText" value="Contact Text: "/>
+                    <p:inputText id="contactText" value="#{feedbackController.feedback.contactText}" required="true"/>
+                    <p:message for="contactText"/>
+
+                    <p:outputLabel for="mail" value="E-mail address: "/>
+                    <p:inputText id="mail" value="#{feedbackController.feedback.mail}" required="true"/>
+                    <p:message for="mail"/>
+
+                    <p:outputLabel for="mailRepeat" value="Repeat e-mail address: "/>
+                    <p:inputText id="mailRepeat" required="true"/>
+                    <p:message for="mailRepeat"/>
+
+                    <h:commandButton value="Send"
+                                     icon="pi pi-check"
+                                     validateClient="true"
+                                     action="#{feedbackController.save}"/>
                 </h:panelGrid>
             </p:panel>
         </h:form>
